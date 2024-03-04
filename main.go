@@ -8,11 +8,10 @@ import (
 )
 
 func main() {
-	width, height, err := term.GetSize(int(os.Stdin.Fd()))
+	width, _, err := term.GetSize(int(os.Stdout.Fd()))
 	if err != nil {
-		fmt.Printf("Error getting terminal size: %v\n", err)
-		return
+		fmt.Fprintf(os.Stderr, "Error getting terminal size: %v\n", err)
+		os.Exit(1)
 	}
-	fmt.Println("Terminal size: %d columns, %d rows\n", width, height)
-	fmt.Println("lsf")
+	fmt.Printf("Terminal width: %d columns\n", width)
 }
