@@ -1,9 +1,9 @@
-package lsf
+package main
 
 import (
 	"fmt"
 )
 
-func Lsf() {
+func main() {
 	fmt.Println("lsf")
 }
