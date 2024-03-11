@@ -13,7 +13,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error getting terminal size: %v\n\n", err)
 		os.Exit(1)
 	}
-	fmt.Printf("Terminal width: %d columns\n", width)
+	fmt.Printf("Terminal width: %d columns\n\n", width)
 	listFilesAndFolders(".")
 }
 
@@ -26,12 +26,11 @@ func listFilesAndFolders(dirPath string) {
 
 	for _, entry := range entries {
 		name := entry.Name()
+		nameLength := len(name)
 		if entry.IsDir() {
-			// Attempt to print directory names in blue
-			fmt.Printf("\033[34m%s\033[0m\n", name)
+			fmt.Printf("\033[34m%s\033[0m | (%d) \n", name, nameLength)
 		} else {
-			// Print file names in default color
-			fmt.Println(name)
+			fmt.Printf("%s | (%d)\n", name, nameLength)
 		}
 	}
 }
