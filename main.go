@@ -9,7 +9,7 @@ import (
 	"golang.org/x/term"
 )
 
-const columnWidth = 20
+const columnWidth = 19
 
 func main() {
 	lFlag := flag.Bool("l", false, "List files and folders with their lengths")
@@ -23,24 +23,40 @@ func main() {
 	fmt.Printf("Terminal width: %d columns\n\n", width)
 
 	if *lFlag {
-		listFilesAndFolders(".", true)
+		listFilesAndFolders(".", width, true)
 	} else {
-		listFilesAndFolders(".", false)
+		listFilesAndFolders(".", width, false)
 	}
 }
 
-func listFilesAndFolders(dirPath string, showLength bool) {
+func listFilesAndFolders(dirPath string, Width int, showLength bool) {
 	entries, err := os.ReadDir(dirPath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error reading directory: %v\n", err)
 		return
 	}
 
+	termWidth := Width - 20
+	lengthRemaining := termWidth
+
 	for _, entry := range entries {
 		name := entry.Name()
 		nameLength := len(name)
+
+		if nameLength > columnWidth {
+			name = name[:columnWidth-3] + ".."
+			nameLength = len(name)
+		}
+
 		columnSpaces := columnWidth - nameLength
 		columnGap := strings.Repeat(" ", columnSpaces)
+
+		if lengthRemaining < columnWidth {
+			fmt.Println()
+			lengthRemaining = termWidth
+		} else {
+			lengthRemaining -= columnWidth
+		}
 
 		nameData := ""
 		if showLength {
