@@ -43,7 +43,7 @@ func listFilesAndFolders(dirPath string, Width int, showLength bool) {
 		name := entry.Name()
 		nameLength := len(name)
 
-		if nameLength > columnWidth {
+		if nameLength >= columnWidth {
 			name = name[:columnWidth-3] + ".."
 			nameLength = len(name)
 		}
