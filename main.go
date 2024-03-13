@@ -4,13 +4,16 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"golang.org/x/term"
 )
 
+const columnWidth = 20
+
 func main() {
 	lFlag := flag.Bool("l", false, "List files and folders with their lengths")
-	flag.Parse() // Parse the flags
+	flag.Parse()
 
 	width, _, err := term.GetSize(int(os.Stdout.Fd()))
 	if err != nil {
@@ -35,15 +38,19 @@ func listFilesAndFolders(dirPath string, showLength bool) {
 
 	for _, entry := range entries {
 		name := entry.Name()
+		nameLength := len(name)
+		columnSpaces := columnWidth - nameLength
+		columnGap := strings.Repeat(" ", columnSpaces)
+
 		nameData := ""
 		if showLength {
-			nameLength := len(name)
 			nameData = fmt.Sprintf(" | %d", nameLength)
 		}
+
 		if entry.IsDir() {
-			fmt.Printf("\033[34m%s\033[0m%s\n", name, nameData)
+			fmt.Printf("\033[34m%s\033[0m%s%s", name, nameData, columnGap)
 		} else {
-			fmt.Printf("%s%s\n", name, nameData)
+			fmt.Printf("%s%s%s", name, nameData, columnGap)
 		}
 	}
 }
