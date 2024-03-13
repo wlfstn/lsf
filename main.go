@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"golang.org/x/term"
+	"golang.org/x/term" // This package is not available in the standard library
 )
 
 const columnWidth = 19
