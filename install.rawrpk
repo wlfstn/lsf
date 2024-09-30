@@ -1,2 +1,2 @@
-INSTALL "https://github.com/rawrstackhub/lsf/releases/download/v1.0/lsf.exe"
+INSTALL "https://github.com/wlfstn/lsf/releases/download/v1.0/lsf.exe"
 ENVVAR ADD user .
