@@ -1,4 +1,4 @@
-package clidraw
+package lsfDraw
 
 import (
 	"fmt"

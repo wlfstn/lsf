@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/wlfstn/lsf/internal/clicmd"
-	"github.com/wlfstn/lsf/internal/clidraw"
+	"github.com/wlfstn/lsf/internal/lsfDraw"
+	"github.com/wlfstn/lsf/internal/lsfFlag"
 )
 
 func main() {
-	listToggle := clicmd.FlagsInit()
-	width := clidraw.GetCliWidth()
-	clidraw.ListFilesAndFolders(".", width, listToggle)
+	lsfState := lsfFlag.Construct()
+	lsfFlag.InitFlags([]string{}, &lsfState)
+	width := lsfDraw.GetCliWidth()
+	lsfDraw.ListFilesAndFolders(".", width, lsfState.Tg_listSize)
 }
