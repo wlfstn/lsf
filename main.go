@@ -1,13 +1,15 @@
 package main
 
 import (
+	"os"
+
 	"github.com/wlfstn/lsf/internal/lsfDraw"
 	"github.com/wlfstn/lsf/internal/lsfFlag"
 )
 
 func main() {
 	lsfState := lsfFlag.Construct()
-	lsfFlag.InitFlags([]string{}, &lsfState)
+	lsfFlag.InitFlags(os.Args[1:], &lsfState)
 	width := lsfDraw.GetCliWidth()
-	lsfDraw.ListFilesAndFolders(".", width, lsfState.Tg_listSize)
+	lsfDraw.ListFilesAndFolders(lsfState.Directory, width, lsfState.Tg_listSize)
 }
