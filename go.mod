@@ -1,6 +1,6 @@
 module github.com/wlfstn/lsf
 
-go 1.23.1
+go 1.23.6
 
 require golang.org/x/term v0.24.0
 

@@ -1,8 +1,8 @@
 package main
 
 import (
-	clicmd "github.com/wlfstn/lsf/internal/cliCmd"
-	clidraw "github.com/wlfstn/lsf/internal/cliDraw"
+	"github.com/wlfstn/lsf/internal/clicmd"
+	"github.com/wlfstn/lsf/internal/clidraw"
 )
 
 func main() {
