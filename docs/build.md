@@ -1,2 +1,2 @@
 ## Building LSF
--> `go build . -o "./build/lsf.exe"`
+-> `go build -o "./build/lsf.exe"`
