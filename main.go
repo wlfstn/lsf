@@ -68,6 +68,10 @@ func main() {
 		CopyToClipboard(dir)
 	} else {
 		width := lsfDraw.GetCliWidth()
+
+		if lsfState.Tg_listWidth {
+			fmt.Printf("Terminal width: %d columns\n\n", width)
+		}
 		lsfDraw.ListFilesAndFolders(lsfState.Directory, width, lsfState.Tg_listSize)
 	}
 }

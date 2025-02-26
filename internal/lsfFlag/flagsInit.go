@@ -12,18 +12,20 @@ const (
 )
 
 type LsfCmds struct {
-	Tg_listSize bool
-	Directory   string
-	Renamer     string
-	CopyDir     uint8
+	Tg_listSize  bool
+	Tg_listWidth bool
+	Directory    string
+	Renamer      string
+	CopyDir      uint8
 }
 
 func Construct() LsfCmds {
 	return LsfCmds{
-		Tg_listSize: false,
-		Directory:   ".",
-		Renamer:     "",
-		CopyDir:     0,
+		Tg_listSize:  false,
+		Tg_listWidth: false,
+		Directory:    ".",
+		Renamer:      "",
+		CopyDir:      0,
 	}
 }
 
@@ -31,6 +33,7 @@ func InitFlags(args []string, lsfState *LsfCmds) {
 	flagSet := flag.NewFlagSet(".", flag.ContinueOnError)
 
 	listSize := flagSet.Bool("l", false, "List files and folders with their lengths")
+	listWidth := flagSet.Bool("dw", false, "List files and folders with their lengths")
 
 	cDir := flagSet.Bool("c", false, "List files and folders with their lengths")
 	copyDir := flagSet.Bool("copy-dir", false, "List files and folders with their lengths")
@@ -47,6 +50,8 @@ func InitFlags(args []string, lsfState *LsfCmds) {
 	}
 
 	lsfState.Tg_listSize = *listSize
+	lsfState.Tg_listWidth = *listWidth
+
 	if *cDir || *copyDir {
 		lsfState.CopyDir = CopyStandard
 	} else if *cDirW || *copyDirW {
