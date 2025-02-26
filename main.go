@@ -11,6 +11,40 @@ import (
 	"github.com/wlfstn/lsf/internal/lsfFlag"
 )
 
+const version = "1.3.0"
+
+func main() {
+	lsfState := lsfFlag.Construct()
+	lsfFlag.InitFlags(os.Args[1:], &lsfState)
+
+	dir, err := os.Getwd()
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+
+	if lsfState.Tg_listVersion {
+		fmt.Printf("LSF Version is: %s", version)
+		return
+	}
+
+	if lsfState.CopyDir == lsfFlag.CopyStandard {
+		normalDir := filepath.ToSlash(dir)
+		fmt.Printf("Current Directory: %s", normalDir)
+		CopyToClipboard(normalDir)
+	} else if lsfState.CopyDir == lsfFlag.CopyWindows {
+		fmt.Printf("Current Directory: %s", dir)
+		CopyToClipboard(dir)
+	} else {
+		width := lsfDraw.GetCliWidth()
+
+		if lsfState.Tg_listWidth {
+			fmt.Printf("Terminal width: %d columns\n\n", width)
+		}
+		lsfDraw.ListFilesAndFolders(lsfState.Directory, width, lsfState.Tg_listSize)
+	}
+}
+
 func CopyToClipboard(text string) error {
 	switch runtime.GOOS {
 	case "windows": // Windows
@@ -46,32 +80,5 @@ func CopyToClipboard(text string) error {
 
 	default:
 		return fmt.Errorf("unsupported platform: %s", runtime.GOOS)
-	}
-}
-
-func main() {
-	lsfState := lsfFlag.Construct()
-	lsfFlag.InitFlags(os.Args[1:], &lsfState)
-
-	dir, err := os.Getwd()
-	if err != nil {
-		fmt.Println("Error: ", err)
-		return
-	}
-
-	if lsfState.CopyDir == lsfFlag.CopyStandard {
-		normalDir := filepath.ToSlash(dir)
-		fmt.Printf("Current Directory: %s", normalDir)
-		CopyToClipboard(normalDir)
-	} else if lsfState.CopyDir == lsfFlag.CopyWindows {
-		fmt.Printf("Current Directory: %s", dir)
-		CopyToClipboard(dir)
-	} else {
-		width := lsfDraw.GetCliWidth()
-
-		if lsfState.Tg_listWidth {
-			fmt.Printf("Terminal width: %d columns\n\n", width)
-		}
-		lsfDraw.ListFilesAndFolders(lsfState.Directory, width, lsfState.Tg_listSize)
 	}
 }
