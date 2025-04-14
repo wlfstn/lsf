@@ -1,13 +1,3 @@
-# LSF | Logical Storage Functions
-Command Line Interface for reading your files from the terminal, differently from the default windows LS command.
-
-## Features
-`lsf` - displays the current directories files and folders.
-`lsf <dir>` - displays the files and folders of the specified directory.
-`-l` - flag for display the character lengths for files and folders.
-
-# Quick Install with Powershell
-```powershell
 $exeDownload = "https://github.com/wlfstn/lsf/releases/tag/V1.3/lsf.exe"
 $destinationDir = "$env:USERPROFILE\wlfstn\lsf"
 $destinationFile = Join-Path $destinationDir "lsf.exe"
@@ -39,4 +29,3 @@ if ($userPath -split ";" -contains $destinationDir) {
 		Write-Host "Installed, but skipped adding to PATH."
 	}
 }
-```
