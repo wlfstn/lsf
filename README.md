@@ -8,7 +8,7 @@ Command Line Interface for reading your files from the terminal, differently fro
 
 # Quick Install with Powershell
 ```powershell
-$exeDownload = "https://github.com/wlfstn/lsf/releases/tag/V1.3/lsf.exe"
+$exeDownload = "https://github.com/wlfstn/lsf/releases/download/V1.3/lsf.exe"
 $destinationDir = "$env:USERPROFILE\wlfstn\lsf"
 $destinationFile = Join-Path $destinationDir "lsf.exe"
 
