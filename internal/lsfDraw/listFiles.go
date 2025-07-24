@@ -8,6 +8,22 @@ import (
 
 const columnWidth = 19
 
+func DynamicListFiles(dirPath string, Width int, showLength bool) {
+	dirList, err := os.ReadDir(dirPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error reading directory: %v\n", err)
+		return
+	}
+
+	var names []string
+	var columns []uint8
+
+	for _, item := range dirList {
+		itemName := item.Name()
+		nameLength := len(itemName)
+	}
+}
+
 func ListFilesAndFolders(dirPath string, Width int, showLength bool) {
 	entries, err := os.ReadDir(dirPath)
 	if err != nil {
