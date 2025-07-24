@@ -28,14 +28,15 @@ func main() {
 		return
 	}
 
-	if lsfState.CopyDir == lsfFlag.CopyStandard {
+	switch lsfState.CopyDir {
+	case lsfFlag.CopyStandard:
 		normalDir := filepath.ToSlash(dir)
 		fmt.Printf("Current Directory: %s", normalDir)
 		CopyToClipboard(normalDir)
-	} else if lsfState.CopyDir == lsfFlag.CopyWindows {
+	case lsfFlag.CopyWindows:
 		fmt.Printf("Current Directory: %s", dir)
 		CopyToClipboard(dir)
-	} else {
+	default:
 		width := lsfDraw.GetCliWidth()
 
 		if lsfState.Tg_listWidth {
