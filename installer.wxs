@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Package Name="LSF" Version="1.0.0.0" Manufacturer="WlfStn" UpgradeCode="2c9cbc0c-a317-4ea2-bab0-32c1d8ef775b">
-
-    <Component>
-      <File Source="./build/lsf.exe" />
-    </Component>
-  </Package>
-</Wix>
