@@ -35,17 +35,17 @@ func InitFlags(args []string, lsfState *LsfCmds) {
 	flagSet := flag.NewFlagSet(".", flag.ContinueOnError)
 
 	listSize := flagSet.Bool("l", false, "List files and folders with their lengths")
-	listWidth := flagSet.Bool("dw", false, "List the terminal width")
+	listWidth := flagSet.Bool("w", false, "List the terminal width")
 	listVersion := flagSet.Bool("v", false, "List version of the software")
 	flagSet.BoolVar(listVersion, "version", false, "List the version of the software")
 
-	cDir := flagSet.Bool("c", false, "List files and folders with their lengths")
-	copyDir := flagSet.Bool("copy-dir", false, "List files and folders with their lengths")
-	cDirW := flagSet.Bool("c:win", false, "List files and folders with their lengths")
-	copyDirW := flagSet.Bool("copy-dir:win", false, "List files and folders with their lengths")
+	cDir := flagSet.Bool("c", false, "Copy directory path")
+	copyDir := flagSet.Bool("copy-dir", false, "Copy directory path")
+	cDirW := flagSet.Bool("c:win", false, "Copy windows style directory path")
+	copyDirW := flagSet.Bool("copy-dir:win", false, "Copy windows style directory path")
 
 	seqRename := flagSet.String("seq-rename", "", "Specify the sequence rename pattern")
-	flagSet.StringVar(seqRename, "s", "", "Specify the seuqnece rename pattern (shorthand)")
+	flagSet.StringVar(seqRename, "s", "", "Specify the seuqnece rename pattern")
 
 	err := flagSet.Parse(args)
 	if err != nil {
