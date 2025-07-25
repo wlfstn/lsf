@@ -42,7 +42,7 @@ func main() {
 		if lsfState.Tg_listWidth {
 			fmt.Printf("Terminal width: %d columns\n\n", width)
 		}
-		lsfDraw.ListFilesAndFolders(lsfState.Directory, width, lsfState.Tg_listSize)
+		lsfDraw.DynamicListFiles(lsfState.Directory, width, lsfState.Tg_listSize)
 	}
 }
 
