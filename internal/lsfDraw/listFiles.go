@@ -8,9 +8,6 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-const columnWidth = 19
-const colPadding = 2
-
 type FileEntry struct {
 	Name   string
 	RawLen int
@@ -37,6 +34,7 @@ func DynamicListFiles(dirPath string, width int, showLength bool) {
 	}
 
 	var entries []FileEntry
+	var lenghts []int
 
 	for _, item := range dirList {
 		name := item.Name()
@@ -56,18 +54,20 @@ func DynamicListFiles(dirPath string, width int, showLength bool) {
 			RawLen: rawLen,
 			IsDir:  item.IsDir(),
 		})
+		lenghts = append(lenghts, rawLen)
 	}
 
 	if len(entries) == 0 {
 		return
 	}
 
+	_ = CalcColumnSize(lenghts, width)
+	fmt.Println()
 	colPadding := 2
 	numCols := 1
 	var numRows int
 	var colWidths []int
 
-	// Determine how many columns fit
 	for tryCols := 1; tryCols <= len(entries); tryCols++ {
 		rows := (len(entries) + tryCols - 1) / tryCols
 		widths := make([]int, tryCols)
