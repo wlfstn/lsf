@@ -11,7 +11,7 @@ import (
 	"github.com/wlfstn/lsf/internal/lsfFlag"
 )
 
-const version = "1.3.0"
+const version = "1.4.0"
 
 func main() {
 	lsfState := lsfFlag.Construct()
