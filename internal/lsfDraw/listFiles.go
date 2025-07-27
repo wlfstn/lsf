@@ -42,7 +42,7 @@ func DynamicListFiles(dirPath string, width int, showLength bool) {
 		name := item.Name()
 		fullPath := filepath.Join(dirPath, name)
 		if isHiddenWindows(fullPath) {
-			continue
+			continue //continue in go exits the loop iteration
 		}
 
 		rawLen := len(name)
@@ -73,7 +73,7 @@ func DynamicListFiles(dirPath string, width int, showLength bool) {
 		widths := make([]int, tryCols)
 
 		// Row-first layout: i = row*numCols + col
-		for row := 0; row < rows; row++ {
+		for row := range rows {
 			for col := 0; col < tryCols; col++ {
 				idx := row*tryCols + col
 				if idx >= len(entries) {
