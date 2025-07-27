@@ -43,6 +43,15 @@ func main() {
 			fmt.Printf("Terminal width: %d columns\n\n", width)
 		}
 		lsfDraw.DynamicListFiles(lsfState.Directory, width, lsfState.Tg_listSize)
+
+		// In-Progress overhaul
+		var WORKING_DIR lsfDraw.FileEntries
+		WORKING_DIR.FilesDirectory(lsfState.Directory)
+		WORKING_DATA := lsfDraw.InitializeGrid(&WORKING_DIR)
+
+		// Overhaul print testing
+		fmt.Printf("Total Directory Elements: %v\n", WORKING_DATA.TotalElements)
+		fmt.Printf("Extra Row Space: %v\n", WORKING_DATA.ExtraWidth)
 	}
 }
 
