@@ -12,7 +12,6 @@ const (
 )
 
 type LsfCmds struct {
-	Tg_listSize    bool
 	Tg_listWidth   bool
 	Tg_listVersion bool
 	Directory      string
@@ -22,7 +21,6 @@ type LsfCmds struct {
 
 func Construct() LsfCmds {
 	return LsfCmds{
-		Tg_listSize:    false,
 		Tg_listWidth:   false,
 		Tg_listVersion: false,
 		Directory:      ".",
@@ -34,7 +32,6 @@ func Construct() LsfCmds {
 func InitFlags(args []string, lsfState *LsfCmds) {
 	flagSet := flag.NewFlagSet(".", flag.ContinueOnError)
 
-	listSize := flagSet.Bool("l", false, "List files and folders with their lengths")
 	listWidth := flagSet.Bool("w", false, "List the terminal width")
 	listVersion := flagSet.Bool("v", false, "List version of the software")
 	flagSet.BoolVar(listVersion, "version", false, "List the version of the software")
@@ -53,7 +50,6 @@ func InitFlags(args []string, lsfState *LsfCmds) {
 		return
 	}
 
-	lsfState.Tg_listSize = *listSize
 	lsfState.Tg_listWidth = *listWidth
 	lsfState.Tg_listVersion = *listVersion
 

@@ -11,7 +11,7 @@ import (
 	"github.com/wlfstn/lsf/internal/lsfFlag"
 )
 
-const version = "1.3.0"
+const version = "1.4.0"
 
 func main() {
 	lsfState := lsfFlag.Construct()
@@ -42,7 +42,23 @@ func main() {
 		if lsfState.Tg_listWidth {
 			fmt.Printf("Terminal width: %d columns\n\n", width)
 		}
-		lsfDraw.DynamicListFiles(lsfState.Directory, width, lsfState.Tg_listSize)
+
+		var WORKING_DIR lsfDraw.FileEntries
+		WORKING_DIR.FilesDirectory(lsfState.Directory)
+		WORKING_DATA := lsfDraw.InitializeGrid(&WORKING_DIR)
+		if WORKING_DATA.MultiRow {
+			overflow := WORKING_DATA.RowOverflowBalance()
+			for overflow {
+				WORKING_DATA.ResetColumnWidths()
+				WORKING_DATA.CalcRowBudget()
+				overflow = WORKING_DATA.RowOverflowBalance()
+			}
+		}
+		WORKING_DATA.Print(&WORKING_DIR)
+
+		// Overhaul print testing
+		fmt.Printf("Total Directory Elements: %v\n", WORKING_DATA.TotalElements)
+		fmt.Printf("Extra Row Space: %v\n", WORKING_DATA.ExtraWidth)
 	}
 }
 
