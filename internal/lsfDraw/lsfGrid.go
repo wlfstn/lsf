@@ -44,8 +44,6 @@ func InitializeGrid(fes *FileEntries) GridList {
 				columnWidths = append(columnWidths, sizeE)
 				extraWidth -= sizeE
 			} else {
-				fmt.Printf("Columns: %v | {%v}\n", len(columnWidths), columnWidths)
-				fmt.Printf("Remaining Budget: %v \n", extraWidth)
 				break
 			}
 		}
@@ -78,12 +76,10 @@ func (grid *GridList) RowOverflowBalance() bool {
 
 		if grid.ElementWidths[i] > grid.ColumnWidths[c] {
 			resizeCost = grid.ElementWidths[i] - grid.ColumnWidths[c]
-			fmt.Printf("Resize Cost: %v | Balance: %v\n", resizeCost, grid.ExtraWidth)
 			if grid.ExtraWidth >= resizeCost {
 				grid.ColumnWidths[c] = grid.ElementWidths[i]
 				grid.ExtraWidth -= resizeCost
 			} else {
-				fmt.Println("Grid Column must reduce")
 				GridColumnReduction = true
 				break
 			}
@@ -98,9 +94,7 @@ func (grid *GridList) RowOverflowBalance() bool {
 
 	if GridColumnReduction && grid.TotalColumns > 1 {
 		if grid.ColumnWidths[len(grid.ColumnWidths)-1] > (resizeCost + grid.ExtraWidth) {
-			fmt.Println("One Column wasn't enough")
 		}
-		fmt.Println("Reducing Grid Columns by 1")
 		grid.TotalColumns -= 1
 		grid.ColumnWidths = grid.ColumnWidths[:len(grid.ColumnWidths)-1]
 	}
@@ -108,7 +102,6 @@ func (grid *GridList) RowOverflowBalance() bool {
 }
 
 func (grid *GridList) CalcRowBudget() {
-	fmt.Printf("Last Balance: %v\n", grid.ExtraWidth)
 	var newCost int
 	for _, e := range grid.ColumnWidths {
 		newCost += e
@@ -118,7 +111,6 @@ func (grid *GridList) CalcRowBudget() {
 
 func (grid *GridList) ResetColumnWidths() {
 	for i := range grid.ColumnWidths {
-		fmt.Printf("Resetting Column %v from %v to %v\n", i, grid.ColumnWidths[i], grid.ElementWidths[i])
 		grid.ColumnWidths[i] = grid.ElementWidths[i]
 	}
 }

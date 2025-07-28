@@ -55,10 +55,6 @@ func main() {
 			}
 		}
 		WORKING_DATA.Print(&WORKING_DIR)
-
-		// Overhaul print testing
-		fmt.Printf("Total Directory Elements: %v\n", WORKING_DATA.TotalElements)
-		fmt.Printf("Extra Row Space: %v\n", WORKING_DATA.ExtraWidth)
 	}
 }
 
