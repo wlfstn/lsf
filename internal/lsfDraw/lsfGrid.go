@@ -2,7 +2,6 @@ package lsfDraw
 
 import (
 	"fmt"
-	"math"
 	"os"
 
 	"golang.org/x/term"
@@ -117,6 +116,13 @@ func (grid *GridList) CalcRowBudget() {
 	grid.ExtraWidth = grid.MaxWidth - newCost
 }
 
+func (grid *GridList) ResetColumnWidths() {
+	for i := range grid.ColumnWidths {
+		fmt.Printf("Resetting Column %v from %v to %v\n", i, grid.ColumnWidths[i], grid.ElementWidths[i])
+		grid.ColumnWidths[i] = grid.ElementWidths[i]
+	}
+}
+
 func (grid *GridList) Print(fes *FileEntries) {
 	var column int = 0
 	var paddingQty int = 2
@@ -132,9 +138,9 @@ func (grid *GridList) Print(fes *FileEntries) {
 
 		// in go %-*s means to left align with padding
 		if e.IsDir {
-			fmt.Printf("\033[34m%s\033[0m%-*s", e.Name, paddingQty, "--")
+			fmt.Printf("\033[34m%s\033[0m%-*s", e.Name, paddingQty, "")
 		} else {
-			fmt.Printf("%s%-*s", e.Name, paddingQty, "--")
+			fmt.Printf("%s%-*s", e.Name, paddingQty, "")
 		}
 		column++
 	}
@@ -148,40 +154,4 @@ func GetCliWidth() int {
 		os.Exit(1)
 	}
 	return width
-}
-
-// 125, 100, 75, 125, 80, 90, 100, 200 | 400
-func CalcColumnSize(elements []int, widthMax int) []int {
-	const widthPadding = 2
-	columnSizes := make([]int, 0)
-	widthBudget := int(widthMax)
-
-	for _, itemLength := range elements {
-		widthCost := int(itemLength) + widthPadding
-		if widthBudget >= widthCost {
-			columnSizes = append(columnSizes, widthCost)
-			widthBudget -= widthCost
-		} else {
-			qtyColumns := len(columnSizes)
-			qtyElements := len(elements)
-			iterations := int(math.Ceil(float64(qtyElements) / float64(qtyColumns)))
-
-			newColumnSizes := make([]int, qtyColumns)
-			for col := range qtyColumns {
-				maxVal := elements[col]
-				for i := 1; i < iterations; i++ {
-					offset := col + i*qtyColumns
-					if offset >= qtyElements {
-						break
-					}
-					if elements[offset] > maxVal {
-						maxVal = elements[offset]
-					}
-				}
-				newColumnSizes[col] = maxVal + widthPadding
-			}
-			return newColumnSizes
-		}
-	}
-	return columnSizes
 }

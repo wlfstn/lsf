@@ -42,17 +42,16 @@ func main() {
 		if lsfState.Tg_listWidth {
 			fmt.Printf("Terminal width: %d columns\n\n", width)
 		}
-		// lsfDraw.DynamicListFiles(lsfState.Directory, width, lsfState.Tg_listSize)
 
-		// In-Progress overhaul
 		var WORKING_DIR lsfDraw.FileEntries
 		WORKING_DIR.FilesDirectory(lsfState.Directory)
 		WORKING_DATA := lsfDraw.InitializeGrid(&WORKING_DIR)
 		if WORKING_DATA.MultiRow {
 			overflow := WORKING_DATA.RowOverflowBalance()
-			if overflow {
+			for overflow {
+				WORKING_DATA.ResetColumnWidths()
 				WORKING_DATA.CalcRowBudget()
-				WORKING_DATA.RowOverflowBalance()
+				overflow = WORKING_DATA.RowOverflowBalance()
 			}
 		}
 		WORKING_DATA.Print(&WORKING_DIR)
