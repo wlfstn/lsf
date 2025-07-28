@@ -1,4 +1,4 @@
-$exeDownload = "https://github.com/wlfstn/lsf/releases/download/V1.3/lsf.exe"
+$exeDownload = "https://github.com/wlfstn/lsf/releases/download/v1.4.0/lsf.exe"
 $destinationDir = "$env:USERPROFILE\wlfstn\lsf"
 $destinationFile = Join-Path $destinationDir "lsf.exe"
 
