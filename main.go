@@ -78,18 +78,18 @@ func CopyToClipboard(text string) error {
 
 	case "darwin": // macOS
 		cmd := exec.Command("pbcopy")
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
 		in, err := cmd.StdinPipe()
 		if err != nil {
+			return err
+		}
+		if err := cmd.Start(); err != nil {
 			return err
 		}
 		if _, err := in.Write([]byte(text)); err != nil {
 			return err
 		}
 		in.Close()
-		return cmd.Run()
+		return cmd.Wait()
 
 	default:
 		return fmt.Errorf("unsupported platform: %s", runtime.GOOS)

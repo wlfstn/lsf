@@ -1,19 +1,13 @@
+//go:build !windows
+// +build !windows
+
 package lsfDraw
 
 import (
 	"fmt"
 	"os"
-	"path/filepath"
-
-	"golang.org/x/sys/windows"
+	"strings"
 )
-
-type FileEntry struct {
-	Name   string
-	RawLen int
-	IsDir  bool
-}
-type FileEntries []FileEntry
 
 func (fe *FileEntries) FilesDirectory(dirPath string) {
 	dirList, err := os.ReadDir(dirPath)
@@ -24,8 +18,7 @@ func (fe *FileEntries) FilesDirectory(dirPath string) {
 
 	for _, item := range dirList {
 		name := item.Name()
-		fullPath := filepath.Join(dirPath, name)
-		if isHiddenWindows(fullPath) {
+		if isHiddenUnix(name) {
 			continue
 		}
 
@@ -38,14 +31,6 @@ func (fe *FileEntries) FilesDirectory(dirPath string) {
 	}
 }
 
-func isHiddenWindows(path string) bool {
-	ptr, err := windows.UTF16PtrFromString(path)
-	if err != nil {
-		return false
-	}
-	attrs, err := windows.GetFileAttributes(ptr)
-	if err != nil {
-		return false
-	}
-	return attrs&windows.FILE_ATTRIBUTE_HIDDEN != 0 || attrs&windows.FILE_ATTRIBUTE_SYSTEM != 0
+func isHiddenUnix(name string) bool {
+	return strings.HasPrefix(name, ".")
 }
